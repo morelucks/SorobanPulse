@@ -7,6 +7,7 @@ pub struct Config {
     pub start_ledger: u64,
     pub port: u16,
     pub api_key: Option<String>,
+    pub behind_proxy: bool,
 }
 
 impl Config {
@@ -24,6 +25,9 @@ impl Config {
                 .parse()
                 .expect("PORT must be a number"),
             api_key: env::var("API_KEY").ok(),
+            behind_proxy: env::var("BEHIND_PROXY")
+                .map(|v| v == "true" || v == "1")
+                .unwrap_or(false),
         }
     }
 }
